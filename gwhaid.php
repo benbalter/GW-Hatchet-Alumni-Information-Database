@@ -12,7 +12,6 @@ License: GPL2
 class GWHAID {
 	static $instance;
 
-	static function test() { echo 'test'; }
 	/**
 	 * Constructor function for hooks
 	 */
@@ -22,11 +21,14 @@ class GWHAID {
 		add_action('template_redirect', array( $this, 'template_intercept') );
 		add_filter('query_vars', array( $this, 'query_var' ) );
 
-		
 		//TESTING ONLY
 		add_action('init', 'flush_rewrite_rules' );
 	}
 	
+	
+	/**
+	 * Default field values
+	 */
 	function field_defaults() {
 		return array( 
 			'name' => '',
@@ -45,6 +47,9 @@ class GWHAID {
 
 	}
 	
+	/**
+	 * Array of fields
+	 */
 	function fields() {
 	
 		return array(
@@ -343,6 +348,11 @@ class GWHAID {
 		
 	}
 
+	/**
+	 * adds our rewrite rules
+	 * @param array $rules original rules
+	 * @returns array modified rules
+	 */
 	function rewrite_rules( $rules ) {
 
 	    $newrules[ 'user/?$'] = 'index.php?gwhaid=1';
@@ -352,6 +362,9 @@ class GWHAID {
 	
 	}
 
+	/**
+	 * Intercepts template redirect and hijacks template as necessary
+	 */
 	function template_intercept() {
 	 		
 	 	global $wp_query;
@@ -379,12 +392,22 @@ class GWHAID {
 	
 	}
 
+	/**
+	 * Filter helper function for template_intercept
+	 * @param string $template original template
+	 * @returns string path to our template
+	 */
 	function template_filter( $template ) {
 		
 		return dirname( __FILE__ ) . '/form.php';
 		
 	}
 	
+	/**
+	 * Tells WP we have query vars
+	 * @param array $vars original query vars
+	 * @returns array modified query vars
+	 */
 	function query_var( $vars ) {
 	
 	    $vars[] = "gwhaid";
