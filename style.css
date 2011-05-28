@@ -1,0 +1,13 @@
+span { display: inline-block; width: 150px }
+div.form-group { margin: 15px 0 }
+div.names input { width: 150px }
+div.emails input { width: 200px }
+p.year input { width: 50px }
+p.zip input { width: 75px }
+p.twitter input { width: 100px }
+p.address input,
+p.city input { width: 150px }
+p.phone input { width: 100px }
+p.positions input { width: 150px }
+span input { margin-left: 135px }
+body.js .hide-if-js { display: none }
