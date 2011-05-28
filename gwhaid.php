@@ -344,9 +344,11 @@ class GWHAID {
 	}
 
 	function rewrite_rules( $rules ) {
-	        
-	    $newrules[ 'gwhaid/?$'] = 'index.php?gwhaid=1';
+
+	    $newrules[ 'user/?$'] = 'index.php?gwhaid=1';
+	    $newrules[ 'user/([^/]+)/?$'] = 'index.php?gwhaid=1&user=$matches[1]';
 	    return $newrules + $rules;
+	    
 	
 	}
 
@@ -355,6 +357,18 @@ class GWHAID {
 	 	global $wp_query;
 	 	
 	 	if( isset($wp_query->query_vars['gwhaid']) ) {	
+	 	
+	 		//check requested user exists
+	 		$user = get_query_var('user');
+	 		if ( $user && !get_user_by('slug', $user) ) {
+	 			$wp_query->set_404();
+	 			return;	
+	 		}
+			 
+			 //if not logged in, request auth
+		 	$user = wp_get_current_user();
+		 	if ( 0 == $user->ID )
+	 			wp_safe_redirect('/wp-admin/?redirect_to=/user/');	
 	 		
 	 		wp_enqueue_script( 'gwhaid', plugins_url( 'js.js', __FILE__ ), array('jquery' ), filemtime( dirname(__FILE__) . '/js.js' ), true );
 	 		wp_enqueue_style( 'gwhaid', plugins_url( 'style.css', __FILE__ ) );
@@ -373,7 +387,8 @@ class GWHAID {
 	
 	function query_var( $vars ) {
 	
-	    $vars[] = "gwhaid";    
+	    $vars[] = "gwhaid";
+	    $vars[] = "user";    
 	    return $vars;
 	
 	}
