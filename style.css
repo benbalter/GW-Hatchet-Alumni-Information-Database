@@ -11,3 +11,4 @@ p.phone input { width: 100px }
 p.positions input { width: 150px }
 span input { margin-left: 135px }
 body.js .hide-if-js { display: none }
+.required:after { margin-left: 3px; content:"*"; color: red; font-weight: bold;} 

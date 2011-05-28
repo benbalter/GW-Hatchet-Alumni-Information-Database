@@ -1,35 +1,24 @@
-<!doctype html>
-<html>
-<head>
-<style>
-span { display: inline-block; width: 150px }
-div.form-group { margin: 15px 0 }
-div.names input { width: 150px }
-div.emails input { width: 200px }
-p.year input { width: 50px }
-p.zip input { width: 75px }
-p.twitter input { width: 100px }
-p.address input,
-p.city input { width: 150px }
-p.phone input { width: 100px }
-p.positions input { width: 150px }
-span input { margin-left: 135px }
-
-body.js .hide-if-js { display: none }
-</style>
-<script src="http://localhost/beta/wp-includes/js/jquery/jquery.js"></script>
-<script>
-(function($){
-	$(document).ready( function() {
-
-	});
-})(jQuery);
-</script>
-</head>
-<body class="js">
+<?php 
+wp_enqueue_script('jquery');
+get_header(); 
+$fields = GWHAID::$instance->fields();
+foreach ($fields as $id=>$group) { ?>
+	<?php if ( isset( $group['label'] ) && strlen( $group['label'] ) != 0 ) { ?>
+		<h3><?php echo $group['label']; ?></h3>
+	<?php } ?>
+	<div class="<?php echo $group['class']; ?>" id="<?php echo $id; ?>">
+	<?php foreach ($group['fields'] as $field) { ?>
+		<div>
+			<label>
+				<span<?php if ($field['required']) echo ' class="required"'; ?>><?php echo $field['label']; ?></span>
+				<input type="<?php echo $field['type']; ?>" name="meta[<?php echo $field['name']; ?>" />
+			</label>
+		</div>	
+	<?php } ?>
+ 	</div>
+<?php } ?>
 
 <div class="form-group names">
-	<div><label><span>First Name</span> <input type="text" name="meta[first_name]" /></label></div>
 	<div><label><span>Last Name</span> <input type="text" name="meta[last_name]" /></label></div>
 	<div><label><span>Maiden Name</span> <input type="text" name="meta[maiden_name]" /></label></div>
 </div>
@@ -42,7 +31,6 @@ body.js .hide-if-js { display: none }
 	<div><label><span>Grad Year</span> <input type="text" name="meta[grad_year]" /></label></div>
 </div>
 
-<h3>Hatchet Positions</h3>
 <div id="positions">
 	<div class="position"><input type="text" name="meta[hatchet_position][]" /></div>
 	<div class="position hide-if-js"><input type="text" name="meta[hatchet_position][]" /></div>
@@ -71,6 +59,4 @@ body.js .hide-if-js { display: none }
 
 <h3>Internal Data</h3>
 <p><label><span>GWID</span> <input type="text" name="meta[gwid]" /></label></p>
-
-</body>
-</html>
+<?php get_footer(); ?>
