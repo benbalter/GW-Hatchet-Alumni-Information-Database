@@ -4,7 +4,7 @@ $fields = GWHAID::$instance->fields();
 
 //check to see if we're passed a user, if not assume current user
 if ( !$user = get_query_var('user') )
-	$user = get_current_user();
+	$user = get_current_user_id();
 
 //do some stuff here to store the data
 if ($_POST) {
