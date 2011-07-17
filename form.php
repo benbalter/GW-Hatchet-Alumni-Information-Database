@@ -1,17 +1,18 @@
 <?php 
-add_filter( 'body_class', GWHAID::$instance->filter_body_class() );
-add_action( 'hatchet_alumni_body_open', GWHAID::$instance->do_body_open_tag() );
-
-get_header(); ?>
-<?php
 $gwhaid = GWHAID::$instance;
+
+add_filter( 'body_class', $gwhaid->filter_body_class() );
+add_action( 'hatchet_alumni_body_open', $gwhaid->do_body_open_tag() );
+
+get_header();
+
 $fields = $gwhaid->fields();
 
 //check to see if we're passed a user, if not assume current user
 if ( !$user = get_query_var('user') )
 	$user = get_current_user_id();
 else
-	$user = get_user_by( 'nicename', $get_query_var( 'user' ) );
+	$user = get_user_by( 'nicename', get_query_var( 'user' ) );
 
 //get userdata
 $userdata = new WP_User( $user );	
