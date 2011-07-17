@@ -379,9 +379,10 @@ class GWHAID {
 	 		}
 			 
 			 //if not logged in, request auth
-		 	$user = wp_get_current_user();
-		 	if ( 0 == $user->ID )
-	 			wp_safe_redirect('/wp-admin/?redirect_to=/user/');	
+		 	if ( ! is_user_logged_in() ) {
+	 			wp_redirect( wp_login_url( home_url( '/user/' ) ) );
+				exit;
+			}
 	 		
 	 		wp_enqueue_script( 'gwhaid', plugins_url( 'js.js', __FILE__ ), array('jquery' ), filemtime( dirname(__FILE__) . '/js.js' ), true );
 	 		wp_enqueue_style( 'gwhaid', plugins_url( 'style.css', __FILE__ ) );
