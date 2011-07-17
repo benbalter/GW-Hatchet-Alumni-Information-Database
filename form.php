@@ -1,13 +1,18 @@
-<?php get_header(); ?>
-<?php
+<?php 
 $gwhaid = GWHAID::$instance;
+
+add_filter( 'body_class', array( $gwhaid, 'filter_body_class' ) );
+add_action( 'hatchet_alumni_body_open', array( $gwhaid, 'do_body_open_tag' ) );
+
+get_header();
+
 $fields = $gwhaid->fields();
 
 //check to see if we're passed a user, if not assume current user
 if ( !$user = get_query_var('user') )
 	$user = get_current_user_id();
 else
-	$user = get_user_by( 'nicename', $get_query_var( 'user' ) );
+	$user = get_user_by( 'nicename', get_query_var( 'user' ) );
 
 //get userdata
 $userdata = new WP_User( $user );	
@@ -22,7 +27,7 @@ if ($_POST) {
 }
 ?>
 <div id="primary">
-<div id="content" role="main">
+<div id="main" role="main">
 <h1 class="entry-title">Alumni Information Database</h1>
 <form method="post">
 <?php

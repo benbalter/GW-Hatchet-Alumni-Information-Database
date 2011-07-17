@@ -1,4 +1,4 @@
-sh3 {font-weight: bold; font-size: 15px;}
+h3 {font-weight: bold; font-size: 15px;}
 span { display: inline-block; width: 150px }
 div.form-group { margin: 15px 0 }
 div.names input { width: 150px }
@@ -12,4 +12,5 @@ div.year input { width: 50px }
 #positions input { width: 150px }
 span input { margin-left: 135px }
 body.js .hide-if-js { display: none }
+body.no-js .hide-if-no-js { display: none }
 .required:after { margin-left: 3px; content:"*"; color: red; font-weight: bold;} 

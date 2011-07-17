@@ -531,6 +531,15 @@ class GWHAID {
 				echo "\t\t\t" . '<input type="hidden" name="' . $name . '" id="' . $name . '" value="' . $value . '" />' . "\n";
 			}
 
+	function filter_body_class( $classes ) {
+		$classes[] = 'no-js';
+		return $classes;
+	}
+
+	function do_body_open_tag() {
+		echo "<script>document.body.className = document.body.className.replace(/no-js/, 'js');</script>\n";
+	}
+
 }
 
 new GWHAID;
