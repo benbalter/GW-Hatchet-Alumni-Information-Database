@@ -10,7 +10,7 @@ if ( !$user = get_query_var('user') )
 if ($_POST) {
 	foreach ($fields as $group) {
 		foreach ($group['fields'] as $field) {
-			update_user_meta( $user, $id, sanitize_text_field( $_POST[$field['name']] ) ); 
+			update_user_meta( $user, $field['name'], sanitize_text_field( $_POST[$field['name']] ) ); 
 		}
 	}
 }
