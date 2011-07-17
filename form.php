@@ -1,4 +1,8 @@
-<?php get_header(); ?>
+<?php 
+add_filter( 'body_class', GWHAID::$instance->filter_body_class() );
+add_action( 'hatchet_alumni_body_open', GWHAID::$instance->do_body_open_tag() );
+
+get_header(); ?>
 <?php
 $fields = GWHAID::$instance->fields();
 
@@ -16,7 +20,7 @@ if ($_POST) {
 }
 ?>
 <div id="primary">
-<div id="content" role="main">
+<div id="main" role="main">
 <h1 class="entry-title">Alumni Information Database</h1>
 <form method="post">
 <?php
