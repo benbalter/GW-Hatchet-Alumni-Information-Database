@@ -32,18 +32,18 @@ class GWHAID {
 	function field_defaults() {
 		return array( 
 			'name' => '',
-    		'label' => '',
-    		'permissions' => array( 
-    			'global_read' => false,
-    			'user_write' => false,
-    		),
-    		'group' => '',
-    		'multiple' => false,
-    		'required' => false,
-    		'type' => 'text',
-    		'choices' => array(),
-    		'value' => '',
-   		);	
+			'label' => '',
+			'permissions' => array( 
+				'global_read' => false,
+				'user_write' => false,
+			),
+			'group' => '',
+			'multiple' => false,
+			'required' => false,
+			'type' => 'text',
+			'choices' => array(),
+			'value' => '',
+		);	
 
 	}
 	
@@ -355,10 +355,10 @@ class GWHAID {
 	 */
 	function rewrite_rules( $rules ) {
 
-	    $newrules[ 'user/?$'] = 'index.php?gwhaid=1';
-	    $newrules[ 'user/([^/]+)/?$'] = 'index.php?gwhaid=1&user=$matches[1]';
-	    return $newrules + $rules;
-	    
+		$newrules[ 'user/?$'] = 'index.php?gwhaid=1';
+		$newrules[ 'user/([^/]+)/?$'] = 'index.php?gwhaid=1&user=$matches[1]';
+		return $newrules + $rules;
+		
 	
 	}
 
@@ -378,8 +378,8 @@ class GWHAID {
 	 			return;	
 	 		}
 			 
-			 //if not logged in, request auth
-		 	if ( ! is_user_logged_in() ) {
+			// if not logged in, request auth
+			if ( ! is_user_logged_in() ) {
 	 			wp_redirect( wp_login_url( home_url( '/user/' ) ) );
 				exit;
 			}
@@ -411,14 +411,14 @@ class GWHAID {
 	 */
 	function query_var( $vars ) {
 	
-	    $vars[] = "gwhaid";
-	    $vars[] = "user";    
-	    return $vars;
+		$vars[] = "gwhaid";
+		$vars[] = "user";	
+		return $vars;
 	
 	}
 	/**
 	 * Generate a form input field
-	 *  
+	 *
 	 * @param string $name The name of the input field
 	 * @param string $desc The label to associate with the field
 	 * @param string $type The type of input, can be text, textarea, select, radio, checkbox, hidden, password, file, submit or reset
@@ -430,105 +430,105 @@ class GWHAID {
 	 * @param string $helptext Helptext
 	 */
 	function make_field( $name, $type, $value="", $choices=array() ) {
-	    	switch($type) {
-	    		case 'text':
-	    			$this->make_text_field($name,$value);
-	    		break;
-	    		case 'textarea':
-	    			$this->make_textarea_field($name,$value);
-	    		break;
-	    		case 'select':
-	    			$this->make_select_field($name,$value,$choices);
-	    		break;
-	    		case 'radio':
-	    			$this->make_radio_field($name,$value,$choices);
-	    		break;
-	    		case 'checkbox':
-	    			$this->make_checkbox_field($name,$value,$choices);	
-	    		break;
-	    		case 'hidden':
-	    			$this->make_hidden_field($name,$value);
-	    		break;
-	    	}
-	    }
+			switch($type) {
+				case 'text':
+					$this->make_text_field($name,$value);
+				break;
+				case 'textarea':
+					$this->make_textarea_field($name,$value);
+				break;
+				case 'select':
+					$this->make_select_field($name,$value,$choices);
+				break;
+				case 'radio':
+					$this->make_radio_field($name,$value,$choices);
+				break;
+				case 'checkbox':
+					$this->make_checkbox_field($name,$value,$choices);	
+				break;
+				case 'hidden':
+					$this->make_hidden_field($name,$value);
+				break;
+			}
+		}
 	
-	    	function make_text_field($name,$value) {
-	    		echo "\t\t\t" . '<input type="text" name="' . $name . '" id="' . $name . '" value="' . $value . '"';
-	    		echo " />\n";
-	    	}
-	    	
-	    	/**
-	    	 * Generates a textarea input field
-	    	 *
-	    	 * @param string $name The name of the input field
-	    	 * @param string $value The value to set the field to on load
-	    	 * @param int $size Size param to pass to input tag
-	    	 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
-	    	 */
-	    	function make_textarea_field($name,$value) {
-	    		echo "\t\t\t" . '<textarea name="' . $name . '" id="' . $name . '"';
-	    		echo '>' . $value . "</textarea>\n";
-	    	}
-	    	
-	    	/**
-	    	 * Generates a select drop-down
-	    	 *
-	    	 * @param string $name The name of the input field
-	    	 * @param string $value The value to set the field to on load
-	    	 * @param array $choices Choices to pass to radio, select, and checkbox inputs
-	    	 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
-	    	 */
-	    	function make_select_field($name,$value,$choices) {
-	    		echo "\t\t\t" . '<select name="' . $name . '" id="' . $name . '" ' . ">\n";
-	    		foreach ($choices as $choice=>$desc) {
-	    			echo "\t\t\t\t" . '<option value="' . $choice . '"';
-	    			if ($choice == $value) echo ' selected="true"';
-	    			echo '>' . $desc . "</option>\n";
-	    		}
-	    		echo "\t\t\t" . "</select>\n";
-	    	}
-	    	
-	    	/**
-	    	 * Generates a set of radio inputs
-	    	 *
-	    	 * @param string $name The name of the input field
-	    	 * @param string $value The value to set the field to on load
-	    	 * @param array $choices Choices to pass to radio, select, and checkbox inputs
-	    	 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
-	    	 */
-	    	function make_radio_field($name,$value,$choices) {
-	    		foreach ($choices as $choice=>$desc) {
-	    			echo "\t\t\t" . '<input type="radio" name="' . $name . '" id="' . $name . '[' . $choice . ']" ' . " value='" . $choice. "'";
-	    			if ($choice == $value) echo ' checked="true"';
-	    			echo ' /><label for="' . $name . '[' . $choice . ']">' . $desc . "</label><br />\n";
-	    		}
-	    	}
-	    	
-	    	/**
-	    	 * Generates a set of checkboxes
-	    	 *
-	    	 * @param string $name The name of the input field
-	    	 * @param string $value The value to set the field to on load
-	    	 * @param array $choices Choices to pass to radio, select, and checkbox inputs
-	    	 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
-	    	 */
-	    	function make_checkbox_field($name,$value,$choices) {
-	    		foreach ($choices as $choice=>$desc) {
-	    			echo "\t\t\t" . '<input type="checkbox" name="' . $name . '[' . $choice . ']" id="' . $name . '[' . $choice . ']" ';
-	    			if ($choice == $value) echo ' checked="checked"';
-	    			echo ' /><label for="' . $name . '[' . $choice . ']">' . $desc . "</label><br />\n";
-	    		}
-	    	}
-	    	
-	    	/**
-	    	 * Generates a hidden field
-	    	 *
-	    	 * @param string $name The name of the input field
-	    	 * @param string $value The value to set the field to
-	    	 */
-	    	function make_hidden_field($name,$value) {
-	    		echo "\t\t\t" . '<input type="hidden" name="' . $name . '" id="' . $name . '" value="' . $value . '" />' . "\n";
-	    	}
+			function make_text_field($name,$value) {
+				echo "\t\t\t" . '<input type="text" name="' . $name . '" id="' . $name . '" value="' . $value . '"';
+				echo " />\n";
+			}
+			
+			/**
+			 * Generates a textarea input field
+			 *
+			 * @param string $name The name of the input field
+			 * @param string $value The value to set the field to on load
+			 * @param int $size Size param to pass to input tag
+			 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
+			 */
+			function make_textarea_field($name,$value) {
+				echo "\t\t\t" . '<textarea name="' . $name . '" id="' . $name . '"';
+				echo '>' . $value . "</textarea>\n";
+			}
+			
+			/**
+			 * Generates a select drop-down
+			 *
+			 * @param string $name The name of the input field
+			 * @param string $value The value to set the field to on load
+			 * @param array $choices Choices to pass to radio, select, and checkbox inputs
+			 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
+			 */
+			function make_select_field($name,$value,$choices) {
+				echo "\t\t\t" . '<select name="' . $name . '" id="' . $name . '" ' . ">\n";
+				foreach ($choices as $choice=>$desc) {
+					echo "\t\t\t\t" . '<option value="' . $choice . '"';
+					if ($choice == $value) echo ' selected="true"';
+					echo '>' . $desc . "</option>\n";
+				}
+				echo "\t\t\t" . "</select>\n";
+			}
+			
+			/**
+			 * Generates a set of radio inputs
+			 *
+			 * @param string $name The name of the input field
+			 * @param string $value The value to set the field to on load
+			 * @param array $choices Choices to pass to radio, select, and checkbox inputs
+			 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
+			 */
+			function make_radio_field($name,$value,$choices) {
+				foreach ($choices as $choice=>$desc) {
+					echo "\t\t\t" . '<input type="radio" name="' . $name . '" id="' . $name . '[' . $choice . ']" ' . " value='" . $choice. "'";
+					if ($choice == $value) echo ' checked="true"';
+					echo ' /><label for="' . $name . '[' . $choice . ']">' . $desc . "</label><br />\n";
+				}
+			}
+			
+			/**
+			 * Generates a set of checkboxes
+			 *
+			 * @param string $name The name of the input field
+			 * @param string $value The value to set the field to on load
+			 * @param array $choices Choices to pass to radio, select, and checkbox inputs
+			 * @param string $args Additional arguments to pass to input tag such as onClick or onChange functions
+			 */
+			function make_checkbox_field($name,$value,$choices) {
+				foreach ($choices as $choice=>$desc) {
+					echo "\t\t\t" . '<input type="checkbox" name="' . $name . '[' . $choice . ']" id="' . $name . '[' . $choice . ']" ';
+					if ($choice == $value) echo ' checked="checked"';
+					echo ' /><label for="' . $name . '[' . $choice . ']">' . $desc . "</label><br />\n";
+				}
+			}
+			
+			/**
+			 * Generates a hidden field
+			 *
+			 * @param string $name The name of the input field
+			 * @param string $value The value to set the field to
+			 */
+			function make_hidden_field($name,$value) {
+				echo "\t\t\t" . '<input type="hidden" name="' . $name . '" id="' . $name . '" value="' . $value . '" />' . "\n";
+			}
 
 }
 
