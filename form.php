@@ -1,8 +1,8 @@
 <?php 
 $gwhaid = GWHAID::$instance;
 
-add_filter( 'body_class', $gwhaid->filter_body_class() );
-add_action( 'hatchet_alumni_body_open', $gwhaid->do_body_open_tag() );
+add_filter( 'body_class', array( $gwhaid, 'filter_body_class' ) );
+add_action( 'hatchet_alumni_body_open', array( $gwhaid, 'do_body_open_tag' ) );
 
 get_header();
 
