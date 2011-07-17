@@ -532,7 +532,7 @@ class GWHAID {
 			}
 
 	function filter_body_class( $classes ) {
-		$classes[] 'no-js';
+		$classes[] = 'no-js';
 		return $classes;
 	}
 
