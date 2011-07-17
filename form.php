@@ -8,9 +8,6 @@ if ( !$user = get_query_var('user') )
 	$user = get_current_user_id();
 else
 	$user = get_user_by( 'nicename', $get_query_var( 'user' ) );
-	
-if ( !$user )
-	wp_error( '404' );
 
 //get userdata
 $userdata = new WP_User( $user );	
