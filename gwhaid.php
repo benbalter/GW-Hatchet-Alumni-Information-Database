@@ -11,6 +11,7 @@ License: GPL2
 
 class GWHAID {
 	static $instance;
+	public $prefix = 'gwhaid_';
 
 	/**
 	 * Constructor function for hooks
