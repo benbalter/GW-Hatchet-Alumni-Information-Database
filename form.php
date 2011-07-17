@@ -32,7 +32,7 @@ foreach ($fields as $id=>$group) { ?>
 		$field = wp_parse_args( $field, GWHAID::$instance->field_defaults() );
 		
 		//check field-level group permissions
-		if ( $user != get_current_user() && $field['permissions']['global_read'] == false )
+		if ( $user != get_current_user_id() && $field['permissions']['global_read'] == false )
 			continue; 
 		
 		//check field-level user permissions
