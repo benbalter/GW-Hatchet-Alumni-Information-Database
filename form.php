@@ -4,17 +4,23 @@ add_action( 'hatchet_alumni_body_open', GWHAID::$instance->do_body_open_tag() );
 
 get_header(); ?>
 <?php
-$fields = GWHAID::$instance->fields();
+$gwhaid = GWHAID::$instance;
+$fields = $gwhaid->fields();
 
 //check to see if we're passed a user, if not assume current user
 if ( !$user = get_query_var('user') )
 	$user = get_current_user_id();
+else
+	$user = get_user_by( 'nicename', $get_query_var( 'user' ) );
+
+//get userdata
+$userdata = new WP_User( $user );	
 
 //do some stuff here to store the data
 if ($_POST) {
 	foreach ($fields as $group) {
 		foreach ($group['fields'] as $field) {
-			update_user_meta( $user, $id, sanitize_text_field( $_POST[$field['name']] ) ); 
+			update_user_meta( $user, $gwhaid->prefix . $field['name'], sanitize_text_field( $_POST[$field['name']] ) ); 
 		}
 	}
 }
@@ -42,6 +48,14 @@ foreach ($fields as $id=>$group) { ?>
 		//check field-level user permissions
 		if ( !current_user_can( 'manage_options' ) && $field['permissions']['user_write'] == false)
 			continue;
+		
+		//build field key
+		$key = $gwhaid->prefix . $field['name'];
+		
+		//check if user has field set, if so, pull into array
+		if ( isset( $userdata->$key ) )
+			$field['value'] = $userdata->$key;
+		
 		?>
 		<div id="<?php echo $field['name']; ?>">
 			<label>
